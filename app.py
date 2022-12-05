@@ -1,5 +1,7 @@
 import pandas as pd
 from flask import Flask, render_template, request
+import os
+
 # load the dataset
 df = pd.read_csv('conn_attack.csv')
 
@@ -22,7 +24,11 @@ def login():
         dst_bytes = request.form['dst']
         duration = request.form['duration']
         if (float(src_bytes) < upper_limit )and (float(src_bytes) > lower_limit):
-            return f"this is detected as a begin file : 0"
+            return f"this is detected as a benign file : 0"
         else:
-            return f"this is detected as a begin file : 1"
+            return f"this is detected as a malicious file : 1"
+
+if __name__ == "__main__":
+    port = int(os.environ.get('PORT', 5000))
+    app.run(debug=True, host='0.0.0.0', port=port)
         
